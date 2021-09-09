@@ -18,17 +18,18 @@ using System.IO;
 
 #endregion
 
-namespace Temp962021
+namespace SameLineSearch
 {
 
     #region class MainForm
     /// <summary>
-    /// method [Enter Method Description]
+    /// This is the main form for this app.
     /// </summary>
     public partial class MainForm : Form
     {
         
         #region Private Variables
+        private string lastSearchResults;
         #endregion
         
         #region Constructor
@@ -37,21 +38,110 @@ namespace Temp962021
         /// </summary>
         public MainForm()
         {
+            // Create Controls
             InitializeComponent();
+
+            // Perform initializations for this object
+            Init();
         }
         #endregion
 
         #region Events
 
+            #region Button_Enter(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when Button _ Enter
+            /// </summary>
+            private void Button_Enter(object sender, EventArgs e)
+            {
+                // Change the cursor to a hand
+                Cursor = Cursors.Hand;
+            }
+            #endregion
+            
+            #region Button_Leave(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when Button _ Leave
+            /// </summary>
+            private void Button_Leave(object sender, EventArgs e)
+            {
+                // Change the cursor back to the default pointer
+                Cursor = Cursors.Default;
+            }
+            #endregion
+            
+            #region CopiedTimer_Tick(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when Copied Timer _ Tick
+            /// </summary>
+            private void CopiedTimer_Tick(object sender, EventArgs e)
+            {
+                 // only run once
+                CopiedTimer.Enabled = false; 
+                
+                // Hide the Copied image
+                CopiedImage.Visible = false;
+            }
+            #endregion
+            
+            #region CopyButton_Click(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when the 'CopyButton' is clicked.
+            /// </summary>
+            private void CopyButton_Click(object sender, EventArgs e)
+            { 
+                // remove focus from this button
+                OffScreenButton.Focus();
+
+                // if the value for HasLastSearchResults is true
+                if (HasLastSearchResults)
+                {
+                    // copy
+                    Clipboard.SetText(LastSearchResults);
+
+                    // Show the DoneImage
+                    CopiedImage.Visible = true;
+
+                    // Start the DoneTimer
+                    CopiedTimer.Start();
+                }
+            }
+            #endregion
+            
+            #region DoneTimer_Tick(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when Done Timer _ Tick
+            /// </summary>
+            private void DoneTimer_Tick(object sender, EventArgs e)
+            {
+                // only run once
+                DoneTimer.Enabled = false; 
+                
+                // Hide the Done image
+                DoneImage.Visible = false;
+            }
+            #endregion
+            
             #region SearchButton_Click(object sender, EventArgs e)
             /// <summary>
             /// event is fired when the 'SearchButton' is clicked.
             /// </summary>
             private void SearchButton_Click(object sender, EventArgs e)
             {
-                string extension = ".cs";
-                List<string> extensions = new List<string>();
-                extensions.Add(extension);
+                // Erase
+                LastSearchResults = "";
+
+                // Clear any items
+                ResultsListBox.Items.Clear();
+
+                // Set Focus to the offscreen button
+                OffScreenButton.Focus();
+
+                // create the delimiter to parse the extensions
+                char[] delimiter = new char[] { ',' };
+
+                List<string> extensions = TextHelper.GetWordsAsStrings(ExtensionsControl.Text, delimiter);
+                
                 List<string> files = new List<string>();
                 int lineNumber = 0;
 
@@ -59,8 +149,11 @@ namespace Temp962021
                 files = FileHelper.GetFilesRecursively(this.SearchFolder.Text, ref files, extensions);
 
                 string searchText = SearchTextControl.Text;
-                char[] delimiter = new char[] { ' ' };
+                delimiter = new char[] { ' ' };
                 List<Word> searchWords = TextHelper.GetWords(searchText, delimiter);
+
+                // Create a new instance of a 'StringBuilder' object.
+                StringBuilder sb = new StringBuilder();
                 
                 // if the files exist
                 if ((ListHelper.HasOneOrMoreItems(files)) && (ListHelper.HasOneOrMoreItems(searchWords)))
@@ -132,6 +225,10 @@ namespace Temp962021
                                             // build a line to show
                                             string temp = file + " - line: " + lineNumber + ".";
 
+                                            // Used to create the SearchResultsText
+                                            sb.Append(temp);
+                                            sb.Append(Environment.NewLine);
+
                                             // Add this item
                                             ResultsListBox.Items.Add(temp);
 
@@ -139,6 +236,9 @@ namespace Temp962021
                                             break;
                                         }
                                     }
+
+                                    // Store the results in case copied
+                                    LastSearchResults = sb.ToString();
                                 }
                             }
                         }
@@ -146,7 +246,10 @@ namespace Temp962021
                 }
 
                 // Show a message done
-                MessageBox.Show("Done");
+                DoneImage.Visible = true;
+
+                // Start the timer
+                DoneTimer.Start();
             }
             #endregion
             
@@ -187,8 +290,75 @@ namespace Temp962021
             }
         #endregion
 
+            #region Init()
+            /// <summary>
+            /// This method performs initializations for this object.
+            /// </summary>
+            public void Init()
+            {
+                // Set the default extensions
+                string defaultExtensions = ConfigurationHelper.ReadAppSetting("DefaultExtensions");  
+                ExtensionsControl.Text = defaultExtensions;
+            }
         #endregion
 
+        #endregion
+
+        #region Properties
+
+            #region CreateParams
+            /// <summary>
+            /// This property here is what did the trick to reduce the flickering.
+            /// I also needed to make all of the controls Double Buffered, but
+            /// this was the final touch. It is a little slow when you switch tabs
+            /// but that is because the repainting is finishing before control is
+            /// returned.
+            /// </summary>
+            protected override CreateParams CreateParams
+            {
+                get
+                {
+                    // initial value
+                    CreateParams cp = base.CreateParams;
+
+                    // Apparently this interrupts Paint to finish before showing
+                    cp.ExStyle |= 0x02000000;
+
+                    // return value
+                    return cp;
+                }
+            }
+        #endregion
+
+            #region HasLastSearchResults
+            /// <summary>
+            /// This property returns true if the 'LastSearchResults' exists.
+            /// </summary>
+            public bool HasLastSearchResults
+            {
+                get
+                {
+                    // initial value
+                    bool hasLastSearchResults = (!String.IsNullOrEmpty(this.LastSearchResults));
+                    
+                    // return value
+                    return hasLastSearchResults;
+                }
+            }
+            #endregion
+            
+            #region LastSearchResults
+            /// <summary>
+            /// This property gets or sets the value for 'LastSearchResults'.
+            /// </summary>
+            public string LastSearchResults
+            {
+                get { return lastSearchResults; }
+                set { lastSearchResults = value; }
+            }
+            #endregion
+            
+        #endregion
     }
     #endregion
 

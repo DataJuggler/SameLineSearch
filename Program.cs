@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Temp962021
+namespace SameLineSearch
 {
     static class Program
     {

@@ -4,10 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Search.ico</ApplicationIcon>
+    <Description>This sample project was written to improve Visual Studio search and to demonstrate the usefulness
+of DataJuggler.Win.Controls and DataJuggler.UltimateHelper.</Description>
+    <RepositoryUrl>https://github.com/DataJuggler/SameLineSearch.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DataJuggler/SameLineSearch</PackageProjectUrl>
+    <PackageTags>C# RecursiveSearch</PackageTags>
+    <PackageReleaseNotes>This is the first release of this project. I am making a video now to demonstrate how to use it.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Win.Controls" Version="5.8.3" />
+    <PackageReference Include="DataJuggler.Win.Controls" Version="5.8.4" />
   </ItemGroup>
 
   <ItemGroup>

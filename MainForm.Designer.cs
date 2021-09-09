@@ -1,5 +1,5 @@
 ﻿
-namespace Temp962021
+namespace SameLineSearch
 {
     partial class MainForm
     {
@@ -29,11 +29,24 @@ namespace Temp962021
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.SearchTextControl = new DataJuggler.Win.Controls.LabelTextBoxControl();
             this.SearchButton = new DataJuggler.Win.Controls.Button();
             this.SearchFolder = new DataJuggler.Win.Controls.LabelTextBoxBrowserControl();
             this.ResultsListBox = new System.Windows.Forms.ListBox();
+            this.ExtensionsControl = new DataJuggler.Win.Controls.LabelTextBoxControl();
+            this.InstructionsLabel = new System.Windows.Forms.Label();
+            this.InstructionsLabel2 = new System.Windows.Forms.Label();
+            this.OffScreenButton = new DataJuggler.Win.Controls.Button();
+            this.DoneImage = new System.Windows.Forms.PictureBox();
+            this.DoneTimer = new System.Windows.Forms.Timer(this.components);
+            this.CopyButton = new DataJuggler.Win.Controls.Button();
+            this.CopiedImage = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.CopiedTimer = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.DoneImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CopiedImage)).BeginInit();
             this.SuspendLayout();
             // 
             // SearchTextControl
@@ -47,9 +60,9 @@ namespace Temp962021
             this.SearchTextControl.LabelColor = System.Drawing.Color.LemonChiffon;
             this.SearchTextControl.LabelFont = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SearchTextControl.LabelText = "Search Text:";
-            this.SearchTextControl.LabelTopMargin = 0;
+            this.SearchTextControl.LabelTopMargin = 4;
             this.SearchTextControl.LabelWidth = 140;
-            this.SearchTextControl.Location = new System.Drawing.Point(80, 98);
+            this.SearchTextControl.Location = new System.Drawing.Point(80, 92);
             this.SearchTextControl.MultiLine = false;
             this.SearchTextControl.Name = "SearchTextControl";
             this.SearchTextControl.OnTextChangedListener = null;
@@ -69,13 +82,17 @@ namespace Temp962021
             this.SearchButton.BackColor = System.Drawing.Color.Transparent;
             this.SearchButton.ButtonText = "Search";
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SearchButton.ForeColor = System.Drawing.Color.LemonChiffon;
-            this.SearchButton.Location = new System.Drawing.Point(1035, 503);
+            this.SearchButton.Location = new System.Drawing.Point(1071, 583);
+            this.SearchButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(180, 64);
+            this.SearchButton.Size = new System.Drawing.Size(144, 48);
             this.SearchButton.TabIndex = 1;
             this.SearchButton.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
+            this.SearchButton.MouseEnter += new System.EventHandler(this.Button_Enter);
+            this.SearchButton.MouseLeave += new System.EventHandler(this.Button_Leave);
             // 
             // SearchFolder
             // 
@@ -94,9 +111,9 @@ namespace Temp962021
             this.SearchFolder.LabelColor = System.Drawing.Color.LemonChiffon;
             this.SearchFolder.LabelFont = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SearchFolder.LabelText = "Source Folder:";
-            this.SearchFolder.LabelTopMargin = 0;
+            this.SearchFolder.LabelTopMargin = 4;
             this.SearchFolder.LabelWidth = 140;
-            this.SearchFolder.Location = new System.Drawing.Point(80, 35);
+            this.SearchFolder.Location = new System.Drawing.Point(80, 32);
             this.SearchFolder.Name = "SearchFolder";
             this.SearchFolder.OnTextChangedListener = null;
             this.SearchFolder.OpenCallback = null;
@@ -117,24 +134,151 @@ namespace Temp962021
             this.ResultsListBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ResultsListBox.FormattingEnabled = true;
             this.ResultsListBox.ItemHeight = 18;
-            this.ResultsListBox.Location = new System.Drawing.Point(46, 168);
+            this.ResultsListBox.Location = new System.Drawing.Point(46, 240);
             this.ResultsListBox.Name = "ResultsListBox";
-            this.ResultsListBox.Size = new System.Drawing.Size(1169, 292);
+            this.ResultsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.ResultsListBox.Size = new System.Drawing.Size(1169, 310);
             this.ResultsListBox.TabIndex = 3;
+            // 
+            // ExtensionsControl
+            // 
+            this.ExtensionsControl.BackColor = System.Drawing.Color.Transparent;
+            this.ExtensionsControl.BottomMargin = 0;
+            this.ExtensionsControl.Editable = true;
+            this.ExtensionsControl.Encrypted = false;
+            this.ExtensionsControl.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ExtensionsControl.LabelBottomMargin = 0;
+            this.ExtensionsControl.LabelColor = System.Drawing.Color.LemonChiffon;
+            this.ExtensionsControl.LabelFont = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.ExtensionsControl.LabelText = "Extensions:";
+            this.ExtensionsControl.LabelTopMargin = 4;
+            this.ExtensionsControl.LabelWidth = 140;
+            this.ExtensionsControl.Location = new System.Drawing.Point(80, 172);
+            this.ExtensionsControl.MultiLine = false;
+            this.ExtensionsControl.Name = "ExtensionsControl";
+            this.ExtensionsControl.OnTextChangedListener = null;
+            this.ExtensionsControl.PasswordMode = false;
+            this.ExtensionsControl.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ExtensionsControl.Size = new System.Drawing.Size(1135, 32);
+            this.ExtensionsControl.TabIndex = 4;
+            this.ExtensionsControl.TextBoxBottomMargin = 0;
+            this.ExtensionsControl.TextBoxDisabledColor = System.Drawing.Color.LightGray;
+            this.ExtensionsControl.TextBoxEditableColor = System.Drawing.Color.White;
+            this.ExtensionsControl.TextBoxFont = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ExtensionsControl.TextBoxTopMargin = 0;
+            this.ExtensionsControl.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
+            // 
+            // InstructionsLabel
+            // 
+            this.InstructionsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.InstructionsLabel.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.InstructionsLabel.Location = new System.Drawing.Point(217, 126);
+            this.InstructionsLabel.Name = "InstructionsLabel";
+            this.InstructionsLabel.Size = new System.Drawing.Size(524, 20);
+            this.InstructionsLabel.TabIndex = 5;
+            this.InstructionsLabel.Text = "Enter search terms separated by a space.";
+            this.InstructionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // InstructionsLabel2
+            // 
+            this.InstructionsLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.InstructionsLabel2.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.InstructionsLabel2.Location = new System.Drawing.Point(217, 206);
+            this.InstructionsLabel2.Name = "InstructionsLabel2";
+            this.InstructionsLabel2.Size = new System.Drawing.Size(667, 20);
+            this.InstructionsLabel2.TabIndex = 6;
+            this.InstructionsLabel2.Text = "Enter extensions to search separated by a comma. Example: .cs,.cshtml,.js";
+            this.InstructionsLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // OffScreenButton
+            // 
+            this.OffScreenButton.BackColor = System.Drawing.Color.Transparent;
+            this.OffScreenButton.ButtonText = "Off Screen";
+            this.OffScreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OffScreenButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.OffScreenButton.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.OffScreenButton.Location = new System.Drawing.Point(-766, 583);
+            this.OffScreenButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.OffScreenButton.Name = "OffScreenButton";
+            this.OffScreenButton.Size = new System.Drawing.Size(180, 64);
+            this.OffScreenButton.TabIndex = 7;
+            this.OffScreenButton.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
+            // 
+            // DoneImage
+            // 
+            this.DoneImage.BackgroundImage = global::SameLineSearch.Properties.Resources.Done;
+            this.DoneImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.DoneImage.Location = new System.Drawing.Point(46, 562);
+            this.DoneImage.Name = "DoneImage";
+            this.DoneImage.Size = new System.Drawing.Size(128, 64);
+            this.DoneImage.TabIndex = 8;
+            this.DoneImage.TabStop = false;
+            this.DoneImage.Visible = false;
+            // 
+            // DoneTimer
+            // 
+            this.DoneTimer.Interval = 3000;
+            this.DoneTimer.Tick += new System.EventHandler(this.DoneTimer_Tick);
+            // 
+            // CopyButton
+            // 
+            this.CopyButton.BackColor = System.Drawing.Color.Transparent;
+            this.CopyButton.ButtonText = "Copy";
+            this.CopyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CopyButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CopyButton.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.CopyButton.Location = new System.Drawing.Point(916, 583);
+            this.CopyButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(144, 48);
+            this.CopyButton.TabIndex = 9;
+            this.CopyButton.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
+            this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
+            // 
+            // CopiedImage
+            // 
+            this.CopiedImage.BackgroundImage = global::SameLineSearch.Properties.Resources.CopiedImage;
+            this.CopiedImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CopiedImage.Location = new System.Drawing.Point(46, 562);
+            this.CopiedImage.Name = "CopiedImage";
+            this.CopiedImage.Size = new System.Drawing.Size(128, 64);
+            this.CopiedImage.TabIndex = 10;
+            this.CopiedImage.TabStop = false;
+            this.CopiedImage.Visible = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            // 
+            // CopiedTimer
+            // 
+            this.CopiedTimer.Interval = 3000;
+            this.CopiedTimer.Tick += new System.EventHandler(this.CopiedTimer_Tick);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SameLineSearch.Properties.Resources.BlackImage;
-            this.ClientSize = new System.Drawing.Size(1265, 597);
+            this.ClientSize = new System.Drawing.Size(1265, 670);
+            this.Controls.Add(this.CopiedImage);
+            this.Controls.Add(this.CopyButton);
+            this.Controls.Add(this.DoneImage);
+            this.Controls.Add(this.OffScreenButton);
+            this.Controls.Add(this.InstructionsLabel2);
+            this.Controls.Add(this.InstructionsLabel);
+            this.Controls.Add(this.ExtensionsControl);
             this.Controls.Add(this.ResultsListBox);
             this.Controls.Add(this.SearchFolder);
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.SearchTextControl);
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Same Line Search";
+            ((System.ComponentModel.ISupportInitialize)(this.DoneImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CopiedImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -145,6 +289,16 @@ namespace Temp962021
         private DataJuggler.Win.Controls.Button SearchButton;
         private DataJuggler.Win.Controls.LabelTextBoxBrowserControl SearchFolder;
         private System.Windows.Forms.ListBox ResultsListBox;
+        private DataJuggler.Win.Controls.LabelTextBoxControl ExtensionsControl;
+        private System.Windows.Forms.Label InstructionsLabel;
+        private System.Windows.Forms.Label InstructionsLabel2;
+        private DataJuggler.Win.Controls.Button OffScreenButton;
+        private System.Windows.Forms.PictureBox DoneImage;
+        private System.Windows.Forms.Timer DoneTimer;
+        private DataJuggler.Win.Controls.Button CopyButton;
+        private System.Windows.Forms.PictureBox CopiedImage;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer CopiedTimer;
     }
 }
 
