@@ -4,7 +4,7 @@ This simple Windows Forms .Net 5 project recursively searches a given directory,
 To run this program after cloning
 1. Start Program
 2. Browse for top level of your project
-3. Entension was hard code for version one ".cs";. I will make this a control as soon as I get some time. You can change this in the Search method.
+3. Entension was hard code for version one ".cs";. I will make this a control as soon as I get some time. You can change this in the SearchButton_Click event.
 4. Type in one or more search terms separated by a space.
 
 This program already helped me, because I was looking for how to return a JSon message so I searched for:
