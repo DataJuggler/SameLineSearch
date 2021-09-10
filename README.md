@@ -1,6 +1,10 @@
 # SameLineSearch
 This simple Windows Forms .Net 5 project recursively searches a given directory, for a set of search terms that all must exist in the same line for it be counted.
 
+Here is a short video demonstrating how to use it. I find it faster than Visual Studio search:
+
+https://youtu.be/NM2-_tE0iak
+
 To run this program after cloning
 1. Start Program
 2. Browse for top level of your project
