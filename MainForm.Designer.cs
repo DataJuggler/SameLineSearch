@@ -159,7 +159,7 @@ namespace SameLineSearch
             this.ExtensionsControl.OnTextChangedListener = null;
             this.ExtensionsControl.PasswordMode = false;
             this.ExtensionsControl.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.ExtensionsControl.Size = new System.Drawing.Size(1135, 32);
+            this.ExtensionsControl.Size = new System.Drawing.Size(640, 32);
             this.ExtensionsControl.TabIndex = 4;
             this.ExtensionsControl.TextBoxBottomMargin = 0;
             this.ExtensionsControl.TextBoxDisabledColor = System.Drawing.Color.LightGray;
