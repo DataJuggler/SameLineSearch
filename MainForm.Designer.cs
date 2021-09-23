@@ -48,6 +48,7 @@ namespace SameLineSearch
             this.InstructionsLabel2 = new System.Windows.Forms.Label();
             this.ExcludeControl = new DataJuggler.Win.Controls.LabelTextBoxControl();
             this.IgnoreCommentsCheckBox = new DataJuggler.Win.Controls.LabelCheckBoxControl();
+            this.StatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DoneImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CopiedImage)).BeginInit();
             this.SuspendLayout();
@@ -317,11 +318,22 @@ namespace SameLineSearch
             this.IgnoreCommentsCheckBox.Size = new System.Drawing.Size(280, 28);
             this.IgnoreCommentsCheckBox.TabIndex = 13;
             // 
+            // StatusLabel
+            // 
+            this.StatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.StatusLabel.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.StatusLabel.Location = new System.Drawing.Point(217, 655);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(653, 43);
+            this.StatusLabel.TabIndex = 14;
+            this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SameLineSearch.Properties.Resources.BlackImage;
             this.ClientSize = new System.Drawing.Size(1265, 743);
+            this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.IgnoreCommentsCheckBox);
             this.Controls.Add(this.InstructionsLabel2);
             this.Controls.Add(this.ExcludeControl);
@@ -367,6 +379,7 @@ namespace SameLineSearch
         private System.Windows.Forms.Label InstructionsLabel2;
         private DataJuggler.Win.Controls.LabelTextBoxControl ExcludeControl;
         private DataJuggler.Win.Controls.LabelCheckBoxControl IgnoreCommentsCheckBox;
+        private System.Windows.Forms.Label StatusLabel;
     }
 }
 

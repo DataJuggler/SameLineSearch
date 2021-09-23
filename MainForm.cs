@@ -129,41 +129,53 @@ namespace SameLineSearch
             /// </summary>
             private void ResultsListBox_DoubleClick(object sender, EventArgs e)
             {
-                if (NullHelper.Exists(ResultsListBox.SelectedItem))
+                StatusLabel.Text = "";
+
+                try
                 {
-                    // Get the string
-                    string temp = ResultsListBox.SelectedItem.ToString();
-
-                    // If the temp string exists
-                    if (TextHelper.Exists(temp))
+                    if (NullHelper.Exists(ResultsListBox.SelectedItem))
                     {
-                        // Get the last index of the dash
-                        int dashIndex = temp.LastIndexOf(" - ");
+                        // Get the string
+                        string temp = ResultsListBox.SelectedItem.ToString();
 
-                        // if the dashIndex was found
-                        if (dashIndex >= 0)
+                        // If the temp string exists
+                        if (TextHelper.Exists(temp))
                         {
-                            // get the fileName
-                            string fileName = temp.Substring(0, dashIndex).Trim();
+                            // Get the last index of the dash
+                            int dashIndex = temp.LastIndexOf(" - ");
 
-                            // Now shell execute the file
-                            FileInfo fileInfo = new FileInfo(fileName);
+                            // if the dashIndex was found
+                            if (dashIndex >= 0)
+                            {
+                                // get the fileName
+                                string fileName = temp.Substring(0, dashIndex).Trim();
 
-                            var p = new Process();
+                                // Now shell execute the file
+                                FileInfo fileInfo = new FileInfo(fileName);
+
+                                var p = new Process();
                                         
-                            p.StartInfo = new ProcessStartInfo();
-                            { 
-                                // Set the working directory                                
-                                p.StartInfo.WorkingDirectory = fileInfo.Directory.FullName;
-                                p.StartInfo.UseShellExecute = true;
-                                p.StartInfo.FileName = fileInfo.FullName;
-                            };
+                                p.StartInfo = new ProcessStartInfo();
+                                { 
+                                    // Set the working directory                                
+                                    p.StartInfo.WorkingDirectory = fileInfo.Directory.FullName;
+                                    p.StartInfo.UseShellExecute = true;
+                                    p.StartInfo.FileName = fileInfo.FullName;
+                                };
 
-                            // launch the file
-                            p.Start();
+                                // launch the file
+                                p.Start();
 
+                            }
                         }
                     }
+                }
+                catch (Exception error)
+                {
+                    StatusLabel.Text = "An error occurred trying to launch the selected file.";
+
+                    // For debugging only
+                    DebugHelper.WriteDebugError("ResultsListBox_DoubleClick", "MainForm.cs", error);
                 }
             }
             #endregion
@@ -411,6 +423,7 @@ namespace SameLineSearch
         #endregion
 
         #endregion
+
     }
     #endregion
 
