@@ -14,7 +14,7 @@ of DataJuggler.Win.Controls and DataJuggler.UltimateHelper.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Win.Controls" Version="5.8.4" />
+    <PackageReference Include="DataJuggler.Win.Controls" Version="5.8.5" />
   </ItemGroup>
 
   <ItemGroup>

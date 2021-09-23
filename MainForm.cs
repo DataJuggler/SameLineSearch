@@ -15,6 +15,7 @@ using DataJuggler.Win.Controls;
 using DataJuggler.UltimateHelper;
 using DataJuggler.UltimateHelper.Objects;
 using System.IO;
+using System.Diagnostics;
 
 #endregion
 
@@ -122,6 +123,51 @@ namespace SameLineSearch
             }
             #endregion
             
+            #region ResultsListBox_DoubleClick(object sender, EventArgs e)
+            /// <summary>
+            /// event is fired when Results List Box _ Double Click
+            /// </summary>
+            private void ResultsListBox_DoubleClick(object sender, EventArgs e)
+            {
+                if (NullHelper.Exists(ResultsListBox.SelectedItem))
+                {
+                    // Get the string
+                    string temp = ResultsListBox.SelectedItem.ToString();
+
+                    // If the temp string exists
+                    if (TextHelper.Exists(temp))
+                    {
+                        // Get the last index of the dash
+                        int dashIndex = temp.LastIndexOf(" - ");
+
+                        // if the dashIndex was found
+                        if (dashIndex >= 0)
+                        {
+                            // get the fileName
+                            string fileName = temp.Substring(0, dashIndex).Trim();
+
+                            // Now shell execute the file
+                            FileInfo fileInfo = new FileInfo(fileName);
+
+                            var p = new Process();
+                                        
+                            p.StartInfo = new ProcessStartInfo();
+                            { 
+                                // Set the working directory                                
+                                p.StartInfo.WorkingDirectory = fileInfo.Directory.FullName;
+                                p.StartInfo.UseShellExecute = true;
+                                p.StartInfo.FileName = fileInfo.FullName;
+                            };
+
+                            // launch the file
+                            p.Start();
+
+                        }
+                    }
+                }
+            }
+            #endregion
+            
             #region SearchButton_Click(object sender, EventArgs e)
             /// <summary>
             /// event is fired when the 'SearchButton' is clicked.
@@ -148,9 +194,14 @@ namespace SameLineSearch
                 // Get the files recursively
                 files = FileHelper.GetFilesRecursively(this.SearchFolder.Text, ref files, extensions);
 
+                // get the searchText
                 string searchText = SearchTextControl.Text;
                 delimiter = new char[] { ' ' };
                 List<Word> searchWords = TextHelper.GetWords(searchText, delimiter);
+
+                // get the excludeText
+                string excludeText = ExcludeControl.Text;
+                List<Word> excludeWords = TextHelper.GetWords(excludeText, delimiter);
 
                 // Create a new instance of a 'StringBuilder' object.
                 StringBuilder sb = new StringBuilder();
@@ -296,9 +347,10 @@ namespace SameLineSearch
             /// </summary>
             public void Init()
             {
-                // Set the default extensions
-                string defaultExtensions = ConfigurationHelper.ReadAppSetting("DefaultExtensions");  
-                ExtensionsControl.Text = defaultExtensions;
+                // Set the default extensions                
+                SearchFolder.Text = ConfigurationHelper.ReadAppSetting("DefaultSearchFolder");
+                ExtensionsControl.Text = ConfigurationHelper.ReadAppSetting("DefaultExtensions");
+                IgnoreCommentsCheckBox.Checked = BooleanHelper.ParseBoolean(ConfigurationHelper.ReadAppSetting("IgnoreComments"), true, true);
             }
         #endregion
 
@@ -356,8 +408,8 @@ namespace SameLineSearch
                 get { return lastSearchResults; }
                 set { lastSearchResults = value; }
             }
-            #endregion
-            
+        #endregion
+
         #endregion
     }
     #endregion
