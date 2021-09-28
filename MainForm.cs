@@ -189,6 +189,13 @@ namespace SameLineSearch
                 // Erase
                 LastSearchResults = "";
 
+                // Show Searching
+                ItemsFoundLabel.Text = "Searching...";
+                ItemsFoundLabel.Visible = true;
+                ItemsFoundLabel.Refresh();
+                Refresh();
+                Application.DoEvents();
+
                 // Clear any items
                 ResultsListBox.Items.Clear();
 
@@ -307,6 +314,10 @@ namespace SameLineSearch
                         }
                     }
                 }
+
+                // show the results
+                ItemsFoundLabel.Text = "Items Found: " + ResultsListBox.Items.Count;
+                ItemsFoundLabel.Visible = true;
 
                 // Show a message done
                 DoneImage.Visible = true;

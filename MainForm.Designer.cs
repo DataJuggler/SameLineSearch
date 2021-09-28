@@ -49,6 +49,7 @@ namespace SameLineSearch
             this.ExcludeControl = new DataJuggler.Win.Controls.LabelTextBoxControl();
             this.IgnoreCommentsCheckBox = new DataJuggler.Win.Controls.LabelCheckBoxControl();
             this.StatusLabel = new System.Windows.Forms.Label();
+            this.ItemsFoundLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DoneImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CopiedImage)).BeginInit();
             this.SuspendLayout();
@@ -88,7 +89,7 @@ namespace SameLineSearch
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SearchButton.ForeColor = System.Drawing.Color.LemonChiffon;
-            this.SearchButton.Location = new System.Drawing.Point(1071, 665);
+            this.SearchButton.Location = new System.Drawing.Point(1071, 660);
             this.SearchButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(144, 48);
@@ -214,7 +215,7 @@ namespace SameLineSearch
             // 
             this.DoneImage.BackgroundImage = global::SameLineSearch.Properties.Resources.Done;
             this.DoneImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.DoneImage.Location = new System.Drawing.Point(46, 644);
+            this.DoneImage.Location = new System.Drawing.Point(200, 644);
             this.DoneImage.Name = "DoneImage";
             this.DoneImage.Size = new System.Drawing.Size(128, 64);
             this.DoneImage.TabIndex = 8;
@@ -233,7 +234,7 @@ namespace SameLineSearch
             this.CopyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CopyButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.CopyButton.ForeColor = System.Drawing.Color.LemonChiffon;
-            this.CopyButton.Location = new System.Drawing.Point(916, 665);
+            this.CopyButton.Location = new System.Drawing.Point(916, 660);
             this.CopyButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.CopyButton.Name = "CopyButton";
             this.CopyButton.Size = new System.Drawing.Size(144, 48);
@@ -245,7 +246,7 @@ namespace SameLineSearch
             // 
             this.CopiedImage.BackgroundImage = global::SameLineSearch.Properties.Resources.CopiedImage;
             this.CopiedImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CopiedImage.Location = new System.Drawing.Point(46, 644);
+            this.CopiedImage.Location = new System.Drawing.Point(200, 644);
             this.CopiedImage.Name = "CopiedImage";
             this.CopiedImage.Size = new System.Drawing.Size(128, 64);
             this.CopiedImage.TabIndex = 10;
@@ -322,17 +323,30 @@ namespace SameLineSearch
             // 
             this.StatusLabel.BackColor = System.Drawing.Color.Transparent;
             this.StatusLabel.ForeColor = System.Drawing.Color.LemonChiffon;
-            this.StatusLabel.Location = new System.Drawing.Point(217, 655);
+            this.StatusLabel.Location = new System.Drawing.Point(337, 655);
             this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(653, 43);
+            this.StatusLabel.Size = new System.Drawing.Size(571, 43);
             this.StatusLabel.TabIndex = 14;
             this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ItemsFoundLabel
+            // 
+            this.ItemsFoundLabel.BackColor = System.Drawing.Color.Transparent;
+            this.ItemsFoundLabel.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.ItemsFoundLabel.Location = new System.Drawing.Point(46, 644);
+            this.ItemsFoundLabel.Name = "ItemsFoundLabel";
+            this.ItemsFoundLabel.Size = new System.Drawing.Size(152, 20);
+            this.ItemsFoundLabel.TabIndex = 15;
+            this.ItemsFoundLabel.Text = "Items Found: 0";
+            this.ItemsFoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ItemsFoundLabel.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SameLineSearch.Properties.Resources.BlackImage;
-            this.ClientSize = new System.Drawing.Size(1265, 743);
+            this.ClientSize = new System.Drawing.Size(1265, 729);
+            this.Controls.Add(this.ItemsFoundLabel);
             this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.IgnoreCommentsCheckBox);
             this.Controls.Add(this.InstructionsLabel2);
@@ -380,6 +394,7 @@ namespace SameLineSearch
         private DataJuggler.Win.Controls.LabelTextBoxControl ExcludeControl;
         private DataJuggler.Win.Controls.LabelCheckBoxControl IgnoreCommentsCheckBox;
         private System.Windows.Forms.Label StatusLabel;
+        private System.Windows.Forms.Label ItemsFoundLabel;
     }
 }
 
