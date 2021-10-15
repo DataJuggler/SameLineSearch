@@ -368,6 +368,7 @@ namespace SameLineSearch
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Same Line Search";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.DoneImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CopiedImage)).EndInit();
             this.ResumeLayout(false);

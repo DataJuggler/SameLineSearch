@@ -123,6 +123,17 @@ namespace SameLineSearch
             }
             #endregion
             
+            #region MainForm_FormClosed(object sender, FormClosedEventArgs e)
+            /// <summary>
+            /// event is fired when Main Form _ Form Closed
+            /// </summary>
+            private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+            {
+                // Close this app
+                Application.Exit();
+            }
+            #endregion
+            
             #region ResultsListBox_DoubleClick(object sender, EventArgs e)
             /// <summary>
             /// event is fired when Results List Box _ Double Click
@@ -196,6 +207,9 @@ namespace SameLineSearch
                 Refresh();
                 Application.DoEvents();
 
+                // local
+                bool skipLine = false;
+
                 // Clear any items
                 ResultsListBox.Items.Clear();
 
@@ -226,7 +240,7 @@ namespace SameLineSearch
                 StringBuilder sb = new StringBuilder();
                 
                 // if the files exist
-                if ((ListHelper.HasOneOrMoreItems(files)) && (ListHelper.HasOneOrMoreItems(searchWords)))
+                if (ListHelper.HasOneOrMoreItems(files, searchWords))
                 {
                     // Get the number of matches needed
                     int wordsToMatch = searchWords.Count;
@@ -268,42 +282,57 @@ namespace SameLineSearch
                                 {
                                     // reset
                                     lineNumber = 0;
+                                    skipLine = false;
 
                                     // Iterate the collection of TextLine objects
                                     foreach (TextLine line in textLines)
                                     {
+                                        // reset
+                                        skipLine = false;
+
                                         // Increment the value for lineNumber
                                         lineNumber++;
+
+                                        // if Ignore Comments is true and this line is a comment
+                                        if ((IgnoreCommentsCheckBox.Checked) && (line.Text.Trim().StartsWith("//")))
+                                        {
+                                            // set tot rue
+                                            skipLine = true;
+                                        }
 
                                         // reset
                                         tempWordsMatched = 0;
 
-                                        // Iterate the collection of Word objects
-                                        foreach (Word word in searchWords)
+                                        // if this not a comment or skip comments is false
+                                        if (!skipLine)
                                         {
-                                            // if this file contains this word
-                                            if (line.Text.ToLower().Contains(word.Text.ToLower()))
+                                            // Iterate the collection of Word objects
+                                            foreach (Word word in searchWords)
                                             {
-                                                // Increment the value for tempWordsMatched
-                                                tempWordsMatched++;
+                                                // if this file contains this word
+                                                if (line.Text.ToLower().Contains(word.Text.ToLower()))
+                                                {
+                                                    // Increment the value for tempWordsMatched
+                                                    tempWordsMatched++;
+                                                }
                                             }
-                                        }
 
-                                         // if all the words match
-                                        if (tempWordsMatched == wordsToMatch)
-                                        {
-                                            // build a line to show
-                                            string temp = file + " - line: " + lineNumber + ".";
+                                             // if all the words match
+                                            if (tempWordsMatched == wordsToMatch)
+                                            {
+                                                // build a line to show
+                                                string temp = file + " - line: " + lineNumber + ".";
 
-                                            // Used to create the SearchResultsText
-                                            sb.Append(temp);
-                                            sb.Append(Environment.NewLine);
+                                                // Used to create the SearchResultsText
+                                                sb.Append(temp);
+                                                sb.Append(Environment.NewLine);
 
-                                            // Add this item
-                                            ResultsListBox.Items.Add(temp);
+                                                // Add this item
+                                                ResultsListBox.Items.Add(temp);
 
-                                            // break out of this loop
-                                            break;
+                                                // break out of this loop
+                                                break;
+                                            }
                                         }
                                     }
 
@@ -434,7 +463,6 @@ namespace SameLineSearch
         #endregion
 
         #endregion
-
     }
     #endregion
 
